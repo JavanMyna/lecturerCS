@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who teaches me what? USM CS Semester 1, 2026/27</title>
+<style>
+  :root {
+    --paper: #f3f5fa;
+    --card: #ffffff;
+    --ink: #16223b;
+    --muted: #55607a;
+    --line: #d5dcec;
+    --blue: #22408f;
+    --blue-soft: #e4ebfb;
+    --amber: #f5b453;
+    --amber-soft: #fdf0d5;
+    --grey: #e5e8ef;
+    --focus: #22408f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0d1322;
+      --card: #151d33;
+      --ink: #e8ecf6;
+      --muted: #98a3bf;
+      --line: #263250;
+      --blue: #9db9ff;
+      --blue-soft: #1d2a4d;
+      --amber: #f5b453;
+      --amber-soft: #3a2f16;
+      --grey: #202a44;
+      --focus: #9db9ff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0d1322;
+    --card: #151d33;
+    --ink: #e8ecf6;
+    --muted: #98a3bf;
+    --line: #263250;
+    --blue: #9db9ff;
+    --blue-soft: #1d2a4d;
+    --amber: #f5b453;
+    --amber-soft: #3a2f16;
+    --grey: #202a44;
+    --focus: #9db9ff;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero { padding: 48px 0 28px; }
+  h1 {
+    font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    max-width: 16ch;
+  }
+  .lede { max-width: 60ch; color: var(--muted); font-size: 1.05rem; margin: 0 0 6px; }
+  .fine { color: var(--muted); font-size: 0.85rem; margin: 10px 0 0; max-width: 70ch; }
+
+  h2 {
+    font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .step {
+    display: inline-grid; place-items: center;
+    width: 1.9rem; height: 1.9rem; border-radius: 4px;
+    background: var(--amber); color: #16223b; font-size: 1rem;
+  }
+  .sub { color: var(--muted); margin: 0 0 14px; font-size: 0.95rem; }
+
+  .panels { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px; align-items: start; padding-bottom: 20px; }
+  @media (max-width: 820px) { .panels { grid-template-columns: 1fr; } }
+
+  .search {
+    width: 100%; padding: 11px 14px; border-radius: 8px;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+    font: inherit; margin-bottom: 12px;
+  }
+  .search::placeholder { color: var(--muted); }
+
+  .group-title { font-weight: 600; margin: 18px 0 8px; font-size: 0.95rem; color: var(--blue); }
+  ul.plain { list-style: none; margin: 0; padding: 0; }
+
+  .course {
+    display: grid; grid-template-columns: 1.5rem 1fr; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px;
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px;
+    cursor: pointer;
+  }
+  .course:hover { border-color: var(--blue); }
+  .course.on { border-color: var(--amber); background: var(--amber-soft); }
+  .course input { width: 1.25rem; height: 1.25rem; margin: 2px 0 0; accent-color: var(--blue); }
+  .codes { font-weight: 600; }
+  .cname { display: block; }
+  .cdesc { display: block; color: var(--muted); font-size: 0.88rem; margin-top: 2px; }
+  .by { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .chip {
+    background: var(--grey); color: var(--ink); font-size: 0.78rem; font-weight: 600;
+    padding: 1px 7px; border-radius: 4px;
+  }
+
+  .sticky { position: sticky; top: 16px; }
+  @media (max-width: 820px) { .sticky { position: static; } }
+
+  .tally {
+    font-weight: 600; background: var(--blue-soft); color: var(--blue);
+    padding: 8px 12px; border-radius: 8px; margin: 0 0 12px; font-size: 0.92rem;
+  }
+  .empty {
+    border: 2px dashed var(--line); border-radius: 12px; padding: 22px 18px; color: var(--muted);
+  }
+
+  .lect {
+    display: grid; grid-template-columns: auto 1fr; gap: 14px;
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 14px; margin-bottom: 10px;
+  }
+  .stamp {
+    min-width: 4.2rem; padding: 10px 8px; text-align: center; align-self: start;
+    background: var(--amber); color: #16223b; border-radius: 4px;
+    font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+    font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em;
+  }
+  .lect h3 { margin: 0; font-size: 1.02rem; line-height: 1.3; }
+  .ttl { color: var(--muted); font-size: 0.85rem; margin: 0; }
+  .teach { margin: 8px 0 0; font-size: 0.9rem; }
+  .teach span { display: block; }
+  .teach b { font-weight: 600; }
+  .warn {
+    margin: 8px 0 0; font-size: 0.82rem; color: var(--ink);
+    background: var(--amber-soft); border-left: 3px solid var(--amber); padding: 5px 9px; border-radius: 0 6px 6px 0;
+  }
+  .lect a.prof {
+    display: inline-block; margin-top: 8px; font-size: 0.88rem; font-weight: 600;
+    color: var(--blue); text-underline-offset: 3px;
+  }
+
+  section.block { padding: 36px 0 8px; border-top: 1.5px solid var(--line); margin-top: 18px; }
+  .dir { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 14px; }
+  .dir .lect { margin-bottom: 12px; }
+
+  details {
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 4px 16px; margin-bottom: 10px;
+  }
+  summary { cursor: pointer; font-weight: 600; padding: 10px 0; }
+  details p, details li { color: var(--muted); font-size: 0.95rem; }
+  details li { margin-bottom: 6px; }
+  details ul { padding-left: 1.1rem; margin: 0 0 12px; }
+  details code {
+    background: var(--grey); color: var(--ink); padding: 1px 6px; border-radius: 4px; font-size: 0.88em;
+  }
+
+  footer { padding: 28px 0 56px; color: var(--muted); font-size: 0.85rem; }
+  footer p { max-width: 75ch; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Who teaches what this semester</h1>
+    <p class="lede">The School of Computer Sciences timetable only shows initials like NHAHM and CYW. Tick the courses you are registered for and this page turns them into names, what each course covers, and a link to every lecturer's profile.</p>
+    <p class="fine">Unofficial student-made guide for Semester I, Sidang Akademik 2026/2027. Your ticks are saved in this browser only.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="panels">
+    <section aria-labelledby="h-courses">
+      <h2 id="h-courses"><span class="step">1</span> Tick your courses</h2>
+      <p class="sub">Not sure which are yours? Check your course registration first. The first four are the ones that look like first-year Semester 1.</p>
+      <input class="search" id="courseSearch" type="search" placeholder="Search by code, course name or lecturer" aria-label="Search courses">
+      <div id="courseList"></div>
+    </section>
+
+    <section class="sticky" aria-labelledby="h-mine" aria-live="polite">
+      <h2 id="h-mine"><span class="step">2</span> Your lecturers</h2>
+      <p class="sub">This list updates as you tick.</p>
+      <div id="mine"></div>
+    </section>
+  </div>
+
+  <section class="block" aria-labelledby="h-dir">
+    <h2 id="h-dir">Everyone on the timetable</h2>
+    <p class="sub" id="dirCount"></p>
+    <input class="search" id="lectSearch" type="search" placeholder="Search by initials, name or course code" aria-label="Search lecturers">
+    <div class="dir" id="dir"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-read">
+    <h2 id="h-read">Reading the original timetable</h2>
+    <p class="sub">A few things that are not obvious at first glance.</p>
+
+    <details open>
+      <summary>What is inside one block?</summary>
+      <p>Take <code>CPT111/CCA101</code>, then <code>NHS/NHAHM</code>, then <code>(DK G31)</code>.</p>
+      <ul>
+        <li>The first line is the course code. A slash joins the older code and the new-curriculum code (CCA or CKC) of the same course.</li>
+        <li>The second line is the lecturers' initials. Two sets of initials mean two lecturers share the course.</li>
+        <li>The last line is the venue. DK is Dewan Kuliah (lecture hall). ELL, Lab 3, Lab 4, Lab 5 and Auditorium are specific rooms.</li>
+        <li>A block that spans two columns is a two-hour slot.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>The grey blocks and odd labels</summary>
+      <ul>
+        <li>Grey Minor Sains, Minor Pengurusan/Sastera and Minor PP S.Komp slots are for students taking a minor. Skip them if you are not.</li>
+        <li>KO-K is Kokurikulum (co-curricular activities), on Monday and Thursday evenings.</li>
+        <li>WUS101, SHE102, SEA205E, Bahasa Malaysia IV and Bahasa Inggeris are university-wide courses, not School of Computer Sciences ones.</li>
+        <li>Bengkel Siswa Lestari (Tahun I) is the first-year workshop, on Wednesday in DK G31.</li>
+        <li>Ceramah Kerjaya is a career talk in the Auditorium on Thursday.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Initials I could not fully settle</summary>
+      <ul>
+        <li><b>MAO</b> is Assoc. Prof. Mohd Azam Osman for CPT113 and CAT304, since the School's list names him there. For CAT201 it could also be Dr Mohd Adib Omar.</li>
+        <li><b>SL</b> is most likely Dr Sukumar Letchmunan, who co-taught the same courses last year.</li>
+        <li><b>ASA</b> (on CFM113) does not match anyone on the School's staff list.</li>
+      </ul>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Built from the School's Semester I 2026/2027 timetable (version 28.8.2026), the School's 2025/2026 undergraduate course list, and the academic staff pages at cs.usm.my. Course names and descriptions come from last year's list, so lecturers and details can change. Always confirm with the School or your registration.</p>
+    <p>Initials were matched to names by me, so treat them as a best reading, not an official record.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var PROFILE = "https://cs.usm.my/index.php/faculty-member/";
+
+  var LECT = {
+    ZAM:  { n: "Zainab Ajab Mohideen", t: "Ts. Dr.", u: "834-zainab-ajab-mohideen" },
+    HYH:  { n: "Hazrina Yusof Hamdani", t: "Dr.", u: "810-hazrina-binti-yusof-hamdani-dr" },
+    CXY:  { n: "Chew XinYing", t: "Assoc. Prof. Ts. Dr. (Programme Manager, Computer Science)", u: "174-chew-xin-ying-dr" },
+    SHMH: { n: "Siti Hazyanti Mohd Hashim", t: "Dr.", u: "741-siti-hazyanti-binti-mohd-hashim-dr" },
+    NHS:  { n: "Nur Hana Samsudin", t: "Dr.", u: "193-nurhana-samsudin-dr" },
+    NHAHM:{ n: "Nurul Hashimah Ahamed Hassain Malim", t: "Assoc. Prof. Dr.", u: "196-nurul-hashimah-ahamad-hassain-malim-dr" },
+    CHY:  { n: "Chan Huah Yong", t: "Assoc. Prof. Dr.", u: "172-chan-huah-yong-associate-professor-dr" },
+    WMNWZ:{ n: "Wan Mohd Nazmee Wan Zainon", t: "Assoc. Prof. Dr. (Dean)", u: "206-wan-mohd-nazmee-wan-zainon-dr" },
+    MAO:  { n: "Mohd Azam Osman", t: "Assoc. Prof.", u: "185-mohd-azam-osman-mr",
+            w: "For CAT201 this could also be Dr Mohd Adib Omar." },
+    AA:   { n: "Anusha Achuthan", t: "Ts. Dr.", u: "490-anusha-achuthan-ts-dr" },
+    SL:   { n: "Sukumar Letchmunan", t: "Dr.", u: "201-sukumar-letchmunan-dr",
+            w: "Best match for SL, not confirmed. Syaheerah Lebai Lutfi also fits the initials." },
+    AJ:   { n: "Aman Jantan", t: "Assoc. Prof. Dr.", u: "166-aman-jantan-associate-professor-dr" },
+    AAM:  { n: "Azman Ab Malik", t: "Dr.", u: "769-azman-ab-malik-dr" },
+    RR:   { n: "Ramona Ramli", t: "Ts. Dr.", u: "840-ts-dr-ramona-ramli" },
+    ASAM: { n: "Ahmad Sufril Azlan Mohamed", t: "Assoc. Prof. Dr.", u: "164-ahmad-sufril-azlan-mohamed-dr" },
+    SI:   { n: "Shahrinaz Ismail", t: "Dr.", u: "875-shahrinaz-ismail" },
+    TTP:  { n: "Tan Tien Ping", t: "Assoc. Prof. Dr.", u: "203-tan-tien-ping-dr" },
+    LCY:  { n: "Lim Chia Yean", t: "Ts. Dr.", u: "700-lim-chia-yean-dr" },
+    MHH:  { n: "Mohd Heikal Husin", t: "Ts. Dr.", u: "187-mohd-heikal-husin-dr" },
+    AMK:  { n: "Azleena Mohd Kassim", t: "Dr.", u: "169-azleena-mohd-kassin-ms" },
+    CYN:  { n: "Cheah Yu-N", t: "Assoc. Prof. Dr.", u: "173-cheah-yu-n-associate-professor-dr" },
+    NARM: { n: "Nursakirah Ab Rahman Muton", t: "Dr.", u: "771-nursakirah-ab-rahman-muton-dr" },
+    NAA:  { n: "Nor Athiyah Abdullah", t: "Dr.", u: "191-nor-athiyah-abdullah-dr" },
+    MNY:  { n: "Mohd Najwadi Yusoff", t: "Ts. Dr.", u: "188-mohd-najwadi-yusoff-dr" },
+    WLP:  { n: "Wong Li Pei", t: "Assoc. Prof. Dr.", u: "208-wong-li-pei-dr" },
+    CYW:  { n: "Chong Yung Wey", t: "Assoc. Prof. Ts. Dr.", u: "803-chong-yung-wey-dr" },
+    VD:   { n: "Vaithegy Doraisamy", t: "Ts. Dr.", u: "773-vaithegy-doraisamy" },
+    MAS:  { n: "Mohammad Ali Sarvghadi", t: "Ts. Dr.", u: "784-mohammad-ali-sarvghadi" },
+    FHH:  { n: "Fadratul Hafinaz Hassan", t: "Dr.", u: "175-fadratul-hafinaz-hassan-dr" },
+    GKH:  { n: "Gan Keng Hoon", t: "Assoc. Prof. Dr.", u: "178-gan-keng-hoon-dr" },
+    MNAW: { n: "Mohd Nadhir Ab Wahab", t: "Dr.", u: "263-mohd-nadhir-ab-wahab-dr" },
+    ARMS: { n: "Azizul Rahman Mohd Shariff", t: "Dr.", u: "167-azizul-rahman-mohd-shariff-dr" },
+    SIF:  { n: "Suzi Iryanti Fadilah", t: "Dr.", u: "264-suzi-iryanti-fadilah-dr" },
+    ASA:  { n: "Not matched to a staff member", t: "", u: null,
+            w: "These initials do not match anyone on the School's staff list. The course may belong to another school." }
+  };
+
+  // lv: "y1" = looks like first-year Semester 1, "later" = other courses on the timetable
+  var COURSES = [
+    { k: "CCA101", c: "CCA101 / CPT111", n: "Principles of Programming", lv: "y1", l: ["NHS", "NHAHM"],
+      d: "Programming in C++: problem solving, decisions, loops, functions, files, pointers and arrays." },
+    { k: "CKC111", c: "CKC111 / CPT112", n: "Discrete Structures", lv: "y1", l: ["CXY", "SHMH"],
+      d: "The maths behind computing: picking the right structure to model a problem and thinking in steps." },
+    { k: "CCA102", c: "CCA102 / CST131", n: "Computer Organisation", lv: "y1", l: ["CYN", "NARM"],
+      d: "How a computer works inside: its components, number systems and simple logic circuits." },
+    { k: "BSL", c: "Bengkel Siswa Lestari (Tahun I)", n: "First-year workshop for new students", lv: "y1", l: ["FHH"],
+      d: "Wednesday, DK G31." },
+    { k: "CPT113", c: "CPT113 / CPM213", n: "Programming Methodology & Data Structures", lv: "y1", l: ["MAO"],
+      d: "The step after Principles of Programming. Check your registration to see if it is yours." },
+
+    { k: "CAT201", c: "CAT201", n: "Integrated Software Development Workshop", lv: "later", l: ["WMNWZ", "MAO"],
+      d: "Project-based workshop on building software from start to finish." },
+    { k: "CAT304", c: "CAT304", n: "Group Innovation Project and Study for Sustainability", lv: "later", l: ["MAO", "WMNWZ"], d: "" },
+    { k: "CAT402", c: "CAT402", n: "Professional and Technopreneurship Development", lv: "later", l: ["ARMS", "SIF"], d: "" },
+    { k: "CMT321", c: "CMT321", n: "Management & Engineering of Databases", lv: "later", l: ["ZAM", "MAS"], d: "" },
+    { k: "CMT322", c: "CMT322", n: "Web Engineering & Technologies", lv: "later", l: ["AA", "SL"], d: "" },
+    { k: "CMT323", c: "CMT323 / CMM322", n: "Information Systems Theory and Management", lv: "later", l: ["ZAM", "HYH"], d: "" },
+    { k: "CPC351", c: "CPC351 / CPM351", n: "Principles of Data Analytics", lv: "later", l: ["WLP", "NHAHM"], d: "" },
+    { k: "CPC353", c: "CPC353", n: "Natural Language Processing", lv: "later", l: ["GKH", "TTP"], d: "" },
+    { k: "CPC354", c: "CPC354", n: "Computer Graphics & Visualization", lv: "later", l: ["ASAM", "SHMH"], d: "" },
+    { k: "CPC357", c: "CPC357", n: "IoT Architecture and Smart Applications", lv: "later", l: ["CYW", "MNAW"], d: "" },
+    { k: "CPT316", c: "CPT316", n: "Programming Language Implementation and Paradigms", lv: "later", l: ["AAM", "RR"], d: "" },
+    { k: "CSE341", c: "CSE341 / CKS221", n: "Software Architecture and Design", lv: "later", l: ["NAA", "NARM"], d: "" },
+    { k: "CSE342", c: "CSE342", n: "Dependable Software Systems Engineering", lv: "later", l: ["RR", "AA"], d: "" },
+    { k: "CSE441", c: "CSE441", n: "Software Process and Quality Assurance", lv: "later", l: ["MHH", "SL"], d: "" },
+    { k: "CST337", c: "CST337", n: "Network Configurations and Protocols", lv: "later", l: ["CYW", "VD"], d: "" },
+    { k: "CST338", c: "CST338", n: "Network and Communication Security", lv: "later", l: ["AJ"], d: "" },
+    { k: "CST339", c: "CST339", n: "Information Security Management and Assurance", lv: "later", l: ["MNY"], d: "" },
+    { k: "CST432", c: "CST432", n: "Microprocessors & Embedded Systems", lv: "later", l: ["AAM"], d: "" },
+    { k: "CST435", c: "CST435", n: "Parallel and Cloud Computing", lv: "later", l: ["CHY"], d: "" },
+    { k: "CKC211", c: "CKC211", n: "Course name not confirmed (new-curriculum code)", lv: "later", l: ["LCY"], d: "" },
+    { k: "CKC212", c: "CKC212", n: "Course name not confirmed (new-curriculum code)", lv: "later", l: ["TTP"], d: "" },
+    { k: "CKS222", c: "CKS222", n: "Course name not confirmed (new-curriculum code)", lv: "later", l: ["MHH", "AMK"], d: "" },
+    { k: "CCA201", c: "CCA201", n: "Course name not confirmed (new-curriculum code)", lv: "later", l: ["VD", "MAS"], d: "" },
+    { k: "CCA202", c: "CCA202", n: "Course name not confirmed (new-curriculum code)", lv: "later", l: ["HYH", "SI"], d: "" },
+    { k: "CFM113", c: "CFM113", n: "Course name not confirmed", lv: "later", l: ["MNAW", "ASA"], d: "" }
+  ];
+
+  var STORE = "usmcs-sem1-mine-2026";
+  var mine = {};
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE) || "[]");
+    if (Array.isArray(saved)) saved.forEach(function (k) { mine[k] = true; });
+  } catch (e) { /* storage empty or blocked: start with nothing ticked */ }
+
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(Object.keys(mine))); } catch (e) {}
+  }
+
+  function $(id) { return document.getElementById(id); }
+  function chips(list) {
+    return list.map(function (i) { return '<span class="chip">' + i + "</span>"; }).join("");
+  }
+  function coursesOf(ini) {
+    return COURSES.filter(function (c) { return c.l.indexOf(ini) !== -1; });
+  }
+  function haystack(c) {
+    var names = c.l.map(function (i) { return (LECT[i] ? LECT[i].n : "") + " " + i; }).join(" ");
+    return (c.c + " " + c.n + " " + names).toLowerCase();
+  }
+
+  /* ---------- courses ---------- */
+  function renderCourses() {
+    var q = $("courseSearch").value.trim().toLowerCase();
+    var html = "";
+    [["y1", "Likely first-year Semester 1"], ["later", "Other courses on the timetable"]].forEach(function (g) {
+      var rows = COURSES.filter(function (c) { return c.lv === g[0] && (!q || haystack(c).indexOf(q) !== -1); });
+      if (!rows.length) return;
+      html += '<p class="group-title">' + g[1] + "</p>";
+      rows.forEach(function (c) {
+        var on = !!mine[c.k];
+        html += '<label class="course' + (on ? " on" : "") + '">' +
+          '<input type="checkbox" data-k="' + c.k + '"' + (on ? " checked" : "") + ">" +
+          "<span><span class='codes'>" + c.c + "</span>" +
+          "<span class='cname'>" + c.n + "</span>" +
+          (c.d ? "<span class='cdesc'>" + c.d + "</span>" : "") +
+          "<span class='by'>" + chips(c.l) + "</span></span></label>";
+      });
+    });
+    $("courseList").innerHTML = html || '<div class="empty">No course matches that search.</div>';
+  }
+
+  /* ---------- lecturer card ---------- */
+  function lectCard(ini, courseList) {
+    var L = LECT[ini];
+    var teach = courseList.map(function (c) {
+      return "<span><b>" + c.c + "</b> " + c.n + "</span>";
+    }).join("");
+    return '<article class="lect">' +
+      '<div class="stamp">' + ini + "</div>" +
+      "<div><h3>" + L.n + "</h3>" +
+      (L.t ? '<p class="ttl">' + L.t + "</p>" : "") +
+      '<p class="teach">' + teach + "</p>" +
+      (L.w ? '<p class="warn">' + L.w + "</p>" : "") +
+      (L.u ? '<a class="prof" href="' + PROFILE + L.u + '" target="_blank" rel="noopener">Open profile page</a>' : "") +
+      "</div></article>";
+  }
+
+  /* ---------- my lecturers ---------- */
+  function renderMine() {
+    var chosen = COURSES.filter(function (c) { return mine[c.k]; });
+    var order = [], seen = {};
+    chosen.forEach(function (c) {
+      c.l.forEach(function (i) { if (!seen[i]) { seen[i] = true; order.push(i); } });
+    });
+    if (!chosen.length) {
+      $("mine").innerHTML = '<div class="empty">Tick a course on the left and its lecturers appear here, with what they teach you and a link to their profile.</div>';
+      return;
+    }
+    var html = '<p class="tally">' + chosen.length + (chosen.length === 1 ? " course" : " courses") +
+      ", " + order.length + (order.length === 1 ? " lecturer" : " lecturers") + "</p>";
+    order.forEach(function (i) {
+      html += lectCard(i, chosen.filter(function (c) { return c.l.indexOf(i) !== -1; }));
+    });
+    $("mine").innerHTML = html;
+  }
+
+  /* ---------- directory ---------- */
+  function renderDir() {
+    var q = $("lectSearch").value.trim().toLowerCase();
+    var keys = Object.keys(LECT).sort(function (a, b) { return LECT[a].n.localeCompare(LECT[b].n); });
+    var shown = keys.filter(function (i) {
+      if (!q) return true;
+      var codes = coursesOf(i).map(function (c) { return c.c + " " + c.n; }).join(" ");
+      return (i + " " + LECT[i].n + " " + codes).toLowerCase().indexOf(q) !== -1;
+    });
+    $("dirCount").textContent = shown.length + " of " + keys.length + " initials shown, sorted by name.";
+    $("dir").innerHTML = shown.length
+      ? shown.map(function (i) { return lectCard(i, coursesOf(i)); }).join("")
+      : '<div class="empty">No lecturer matches that search.</div>';
+  }
+
+  /* ---------- events ---------- */
+  $("courseList").addEventListener("change", function (e) {
+    var k = e.target && e.target.getAttribute("data-k");
+    if (!k) return;
+    if (e.target.checked) mine[k] = true; else delete mine[k];
+    e.target.closest(".course").classList.toggle("on", e.target.checked);
+    save();
+    renderMine();
+  });
+  $("courseSearch").addEventListener("input", renderCourses);
+  $("lectSearch").addEventListener("input", renderDir);
+
+  renderCourses();
+  renderMine();
+  renderDir();
+})();
+</script>
+</body>
+</html>
